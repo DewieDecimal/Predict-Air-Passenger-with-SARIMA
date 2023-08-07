@@ -76,6 +76,10 @@ def SARIMA_predict(modelname, start_date, end_date, dynamic=False, return_series
         predictions = model.predict(start=pd.to_datetime(start_date), end=pd.to_datetime(end_date), dynamic=True)
     else:
         predictions = model.predict(start=pd.to_datetime(start_date), end=pd.to_datetime(end_date), dynamic=False)
+        
+    # When you set dynamic=True, the model continuously predicts one-step ahead (t+1) and then for the 2nd step ahead (t+2) prediction, it appends predicted value (t+1) to data, re-fits model on new expanded data then makes 2nd step ahead forecast. This is called out-of-sample prediction.
+
+    # When you set dynamic=False, the model sequentially predicts one-step-ahead using the true value from previous time step instead of using predicted value. This is called in-sample prediction.
     
     # Extract and return predicted values
     predicted_values = predictions.values
