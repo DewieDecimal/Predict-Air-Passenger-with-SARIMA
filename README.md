@@ -43,7 +43,7 @@ To run this project, you'll need the following Python packages:
 
 ![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/220bd68a-af76-4c98-876b-93f8c66d44aa)
 
-The dataset displayed no abnormal patterns, and no outliers or missing values Ire observed.
+The dataset displayed no abnormal patterns, and no outliers or missing values are observed. The dataset is cleaned.
 
 #### Normal trends
 
