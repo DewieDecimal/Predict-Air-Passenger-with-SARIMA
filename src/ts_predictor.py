@@ -31,6 +31,7 @@ def Air_Passenger_Predictor(modelname, start_date, end_date, dynamic=False, retu
     - start_date: Start date for the prediction period.
     - end_date: End date for the prediction period.
     - dynamic: Whether to use dynamic forecasting (default: False).
+    - return_series: Whether the output will be returned as a Series or just an array of values.
     
     Returns:
     - predictions: Predicted values.
