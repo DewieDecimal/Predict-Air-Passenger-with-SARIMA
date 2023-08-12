@@ -69,41 +69,62 @@ A few things that I can draw from the decomposer:
 * The data is unlikely to be stationary
 * Residual plot doesn't show any trend or seasonality, so the decomposer is working fine
 
-![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/b5275acf-6329-4136-84fe-156fda14b25d)
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/89a5d421-59e4-4a32-b171-0081e1b9b4f0)
 
-Stationarity was attained only after performing the first differencing on the initial series. However, it's worth noting that the p-value obtained from the Adfuller test was 0.0467, approaching the critical threshold of 0.05 (5% significance level).
+The first seasonal difference is still seasonal, plus, there still appears to be a trend in our differenced time-series. An additional non-seasoning differencing is needed.
 
-![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/1fe63714-01fe-4cea-ad48-822c261f8278)
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/ad566ccc-cef9-4e10-8d6b-62b3a389d02f)
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/60ba71a5-79e2-434b-90e6-e399e4cf0850)
 
-![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/bc5d246a-0196-45ed-9dec-9bf31887c222)
+Finally achieved stationarity after one seasonal differencing and one non-seasonal differencing
 
-Upon a preliminary examination of the ACF and PACF plots, I tentatively inferred that a q parameter value of 1 would suffice, while the p (lags) parameter might fall between the range of 0 to 3. Furthermore, to maintain a balanced configuration, the sum of the parameters should not exceed 10 (p + d + q ≤ 10). Building upon this rationale, I will now proceed with parameter refinement using Auto ARIMA - Auto ARIMA will try every possible combination of the parameters to choose the best combination with the lowest AIC score as a low AIC score indicates a good fit.
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/4c7b1a4a-6332-45c3-a581-7aea8391fbb5)
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/399bc55c-f736-4485-95f0-e1ddb780f1b4)
 
+Upon a preliminary examination of the ACF and PACF plots, I tentatively inferred that p,P,q, and Q should fall into a range of 0 to 1. Furthermore, to maintain a balanced configuration, the sum of the parameters should not exceed 10 (p + d + q ≤ 10). 
+It's safe to say the best model for our data is something like this:
+ARIMA([0-1] ,1 ,[0-1]) x ([0-1], 1, [0-1]) 12
+
+Building upon this rationale, I will now proceed with parameter refinement using Auto ARIMA - Auto ARIMA will try every possible combination of the parameters to choose the best combination with the lowest AIC score as a low AIC score indicates a good fit.
 
 
 ### Build Model
 #### Iterating and Evaluating model
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/938f0804-6189-4c9f-b3bf-c5ecc23517cb)
+
+All variables are significant.
 
 ![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/8b8bee11-66d6-4622-9328-6af0c5f795f5)
 
-The optimal model identified is ARIMA(1,1,0)(1,1,3)[12]. It's important to highlight that among the 6 variables, 2 exhibit p-values exceeding 0.05. This suggests that these variables might not possess a substantial statistically significant influence on the model's outcome.
+The "free" model identified is ARIMA(1,1,0)(1,1,3)[12]. It's important to highlight that among the 6 variables, 2 exhibit p-values exceeding 0.05. This suggests that these variables might not possess a substantial statistically significant influence on the model's outcome.
 
 ![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/e7fb94c1-22f4-4d04-b2ce-6aaddc9a210a)
 
-Even so, the residual plot indicates that the model works pretty Ill. 
+As expected, the "free" model has a higher accuracy (lower AIC indicates better fit), but it is also more complex (higher BIC indicates the higher complexity).
 
-![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/92affcf4-a8d9-4755-be85-3b0274aa771c)
+I can do further evaluation but generally, it's not worth the time, since the difference in accuracy is low. The decision of whether or not which would be the better model is more than just a simple trade-off between the model's accuracy and simplicity. Other factors such as domain expertise and context should be taken into account as well.
 
-Generally, for time series, rolling validation is the best method of cross-validation. Employing this approach, I derived an MSE (Mean Squared Error) score which demonstrates a reduction of 28-fold compared to the baseline MSE.
+I proceeded with the simple model as it aligns with my ACF and PACF analysis.
 
-![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/627ba8f8-d7ae-43d8-bf07-ed538da116e8)
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/e8a62029-58b5-484c-b3aa-ecef551a8297)
+
+The residuals plots look good as there is no trend or patterns.
+
+
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/9d9d0439-5468-45ae-8db7-2b30d53aae87)
+
+Generally, for time series, rolling validation is the best method of cross-validation. Employing this approach, I derived an MSE (Mean Squared Error) score which demonstrates a reduction of 27-fold compared to the baseline MSE.
+
+
+![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/6c573e1c-1311-4650-98b2-74b5f100fb5e)
 
 The visualized outcome appears to meet our satisfaction; however, there remains potential for enhancement. Subsequent refinements and adjustments can be considered in future tuning efforts.
 
 
+
 ## Next Steps:
 Expanding our analysis to include other methods can provide a comprehensive understanding of the data and potentially lead to improved predictions. Hence, there are some possible next steps for me:
-* Try other models such as Meta's Prophet, LSTMs, CNNs, GPVAR, etc.
+* Test other models/packages such as Meta's Prophet, LSTMs, CNNs, GPVAR, etc.
 * Predict volatility using GARCH model
 * Engineer new features that will potentially help regressor models like XGBoost account for seasonality, etc.
 * Create an ensemble model that combines predictions from multiple models
