@@ -93,7 +93,8 @@ Building upon this rationale, I will now proceed with parameter refinement using
 #### Iterating and Evaluating model
 ![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/938f0804-6189-4c9f-b3bf-c5ecc23517cb)
 
-All variables are significant.
+All variables of the simple model are significant.
+
 
 ![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/8b8bee11-66d6-4622-9328-6af0c5f795f5)
 
