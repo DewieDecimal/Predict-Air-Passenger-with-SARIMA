@@ -81,7 +81,8 @@ Finally achieved stationarity after one seasonal differencing and one non-season
 ![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/4c7b1a4a-6332-45c3-a581-7aea8391fbb5)
 ![image](https://github.com/DewieDecimal/Predict-Air-Passenger-with-SARIMA/assets/125356334/399bc55c-f736-4485-95f0-e1ddb780f1b4)
 
-Upon a preliminary examination of the ACF and PACF plots, I tentatively inferred that p,P,q, and Q should fall into a range of 0 to 1. Furthermore, to maintain a balanced configuration, the sum of the parameters should not exceed 10 (p + d + q ≤ 10). 
+Generally, to maintain a balanced configuration, the sum of the parameters should not exceed 10 (p + d + q ≤ 10). 
+Upon a preliminary examination of the ACF and PACF plots, I tentatively inferred that p,P,q, and Q should fall into a range of 0 to 1.  
 It's safe to say the best model for our data is something like this:
 ARIMA([0-1] ,1 ,[0-1]) x ([0-1], 1, [0-1]) 12
 
